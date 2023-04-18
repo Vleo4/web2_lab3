@@ -15,7 +15,7 @@ function initAddForm() {
             option.textContent = executor['name'];
             option.value = executor['id'];
             executorSelect.appendChild(option);
-          });
+        });
     }
 
     const projectModel = new Project()
@@ -28,36 +28,45 @@ function initAddForm() {
             option.textContent = project['name'];
             option.value = project['id'];
             projectSelect.appendChild(option);
-          });
+        });
     }
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-      
+
         const formData = new FormData(e.target);
         const running_projectData = {};
         formData.forEach((value, key) => {
-          running_projectData[key] = value;
+            running_projectData[key] = value;
         });
-      
+
         const selectedExecutor = executors.find(
-          (executor) => executor.id == parseInt(formData.get('executor'))
+            (executor) => executor.id == parseInt(formData.get('executor'))
         );
+
+        // Check if the selected executor is already working on 5 or more projects
+        const currentProjects = running_projectModel.GetAll().filter(
+            (project) => project.executor == selectedExecutor.name.toString()
+        );
+        if (currentProjects.length >= 5) {
+            alert('Executor is already working on 5 or more projects.');
+            return; // Return early and do not proceed with project creation
+        }
 
         const selectedProject = projects.find(
             (project) => project.id == parseInt(formData.get('project'))
         );
-      
+
         running_projectData.executor = selectedExecutor.name.toString(); // add the selected customer name to the project data
         running_projectData.project = selectedProject.name.toString();
-      
+
         running_projectModel.Create(running_projectData);
-      
+
         e.target.reset();
         $('#add-modal').modal('hide');
         $('.modal-backdrop').remove();
-      });
-      
+    });
+
 }
 
 function initList() {

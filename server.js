@@ -15,19 +15,19 @@ const app = express()
 // встановлюємо директорію для віддачі статичного контенту (каталог проекту)
 app.use(express.static(__dirname))
 
-const mongo = new mongo_client("mongodb://localhost:27017/", { useUnifiedTopology: true });
+//const mongo = new mongo_client("mongodb://localhost:27017/", { useUnifiedTopology: true });
 
-let db_client;
+//let db_client;
 
 
-mongo.connect((error, client) => {
+// mongo.connect((error, client) => {
 
-  // Виводимо в консоль можливу помилку
-  if (error) { return console.log(error); }
+//   // Виводимо в консоль можливу помилку
+//   if (error) { return console.log(error); }
 
-  // Ініціалізуємо об'єкт <db_client>
-  db_client = client;
-})
+//   // Ініціалізуємо об'єкт <db_client>
+//   db_client = client;
+// })
 
 // налаштовуємо роботу із шаблонізаотором
 app.set('views', path.join(__dirname, '/static/views'))

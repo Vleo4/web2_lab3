@@ -113,4 +113,8 @@ class BaseModel {// eslint-disable-line no-unused-vars
       console.error(`Element with id ${id} not found in ${this.collectionName} collection`);
     }
   }
+
+  GetAll() {
+    return this.Select();
+  }
 }
